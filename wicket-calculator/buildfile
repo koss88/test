@@ -1,0 +1,40 @@
+#Buildr 1.3 buildfile
+
+repositories.remote << "http://repo1.maven.org/maven2/"
+
+JETTY = group('jetty','jetty-util','jetty-ajp', 'servlet-api-2.5', :under=>'org.mortbay.jetty', :version=>'6.1.9')
+
+WICKET_SELF = group("wicket", "wicket-auth-roles", "wicket-extensions", :under=>"org.apache.wicket", :version=>"1.3.3")
+WICKET = [WICKET_SELF, "commons-collections:commons-collections:jar:2.1.1","org.slf4j:slf4j-api:jar:1.4.2"]
+
+JDK_LOG = ["org.slf4j:slf4j-jdk14:jar:1.4.2"]
+
+# To run from the command line, "buildr calculator:run"
+
+desc "Example calculator app in Wicket"
+define "calculator" do
+
+  project.version = "1.0-SNAPSHOT"
+
+  compile.options.target = "1.5"
+
+  resources.filter.from _("src/main/java")
+  resources.exclude("*.java")
+  
+  compile.with [WICKET, JETTY]
+
+  package :jar
+
+  test.with JDK_LOG
+
+  task :run => :build do
+    Java::Commands.java("example.CalcServer", :classpath => test.dependencies, :java_args => rebel_params())
+  end
+  
+  def rebel_params()
+    if ENV["JAVA_REBEL"]
+    	["-noverify", "-javaagent:" + ENV["JAVA_REBEL"]]
+   	else [] end
+  end
+
+end

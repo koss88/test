@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html>
+<head>
+
+<title>Calculator</title>
+
+</head>
+<body onload="document.getElementById('input-field').select()">
+
+	<h1>Calculator</h1>
+
+	<form wicket:id="form">
+		<div>
+			<span wicket:id="display">0</span>&nbsp;
+		</div>
+		<div>
+			<input id="input-field" value="0" type="text" wicket:id="input" /> <input
+				wicket:id="eq" value="=" type="submit" /> <input type="submit"
+				wicket:id="clear" value="c" />
+		</div>
+		<div>
+			<input wicket:id="div" value="/" type="submit" /> <input
+				wicket:id="mult" value="*" type="submit" /> <input wicket:id="sub"
+				value="-" type="submit" /> <input wicket:id="add" value="+"
+				type="submit" />
+		</div>
+	</form>
+
+</body>
+</html>
